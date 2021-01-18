@@ -45,13 +45,14 @@ public class MaskingPatternLayout extends PatternLayout {
                     }
                     // Masks last 4 digits of Customer number, first 4 digits of email and birth date
                     if (matcher.group(group).equals(ConsumerConstant.MASK_CUSTOMER_NUMBER)) {
-                        startIndex = endIndex - ConsumerConstant.MASK_CUSTOMER_NUMBER_LAST_DIGITS;
+                        startIndex = endIndex - ConsumerConstant.MASK_CUSTOMER_NUMBER_LAST_DIGITS - 1;
+                        endIndex -= 1;
                     } else if (matcher.group(group).equals(ConsumerConstant.MASK_EMAIL)) {
-                        endIndex = (startIndex + (endIndex - (endIndex - ConsumerConstant.MASK_EMAIL_DIGITS))) + 1;
-                        startIndex += 1;
+                        endIndex = (startIndex + (endIndex - (endIndex - ConsumerConstant.MASK_EMAIL_DIGITS))) + 2;
+                        startIndex += 2;
                     } else if (matcher.group(group).equals(ConsumerConstant.MASK_BIRTHDATE)) {
-                        endIndex = (startIndex + (endIndex - (endIndex - ConsumerConstant.MASK_EMAIL_DIGITS_LAST_DIGITS))) + 2;
-                        startIndex += 1;
+                        endIndex = (startIndex + (endIndex - (endIndex - ConsumerConstant.MASK_EMAIL_DIGITS_LAST_DIGITS))) + 3;
+                        startIndex += 2;
                     }
                     for (int i = startIndex; i < endIndex; i++) {
                         message.setCharAt(i, '*');
