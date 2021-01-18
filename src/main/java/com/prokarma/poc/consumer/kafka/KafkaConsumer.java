@@ -1,6 +1,6 @@
 package com.prokarma.poc.consumer.kafka;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.prokarma.poc.consumer.constants.ConsumerConstant;
 import com.prokarma.poc.consumer.service.ConsumerService;
 import org.slf4j.Logger;
@@ -15,18 +15,22 @@ public class KafkaConsumer {
 
     private static Logger logger = LoggerFactory.getLogger(KafkaConsumer.class);
 
+    private ConsumerService consumerService;
+
     @Autowired
-    ConsumerService consumerService;
+    KafkaConsumer(ConsumerService consumerService) {
+        this.consumerService = consumerService;
+    }
 
     @KafkaListener(topics = ConsumerConstant.TOPIC, groupId = ConsumerConstant.GROUP_ID, containerFactory = ConsumerConstant.CONTAINER_Factory)
-    public void consume(@Payload JsonNode jsonNode) {
+    public void consume(@Payload ObjectNode objectNode) {
         try {
-            if (jsonNode != null) {
-                logger.info("Consumed data from topic {}", jsonNode);
-                consumerService.storeCustomerDetails(jsonNode);
+            if (objectNode != null) {
+                logger.info("Consumed data from topic {}", objectNode);
+                consumerService.storeCustomerDetails(objectNode);
             }
         } catch (Exception ex) {
-            logger.error("Exception thrown while saving Customer details ");
+            logger.error("Exception thrown while saving Customer details {} : ", ex.getMessage());
         }
     }
 }

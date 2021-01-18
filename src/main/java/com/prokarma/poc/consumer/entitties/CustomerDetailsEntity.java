@@ -1,19 +1,19 @@
 package com.prokarma.poc.consumer.entitties;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "CUSTOMER_DETAILS")
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class CustomerDetailsEntity extends BaseEntity implements Serializable {
+public class CustomerDetailsEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue
@@ -26,7 +26,7 @@ public class CustomerDetailsEntity extends BaseEntity implements Serializable {
     private String lastName;
     @NotNull
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date birthDate;
+    private LocalDate birthDate;
     @NotNull
     private String country;
     @NotNull
@@ -43,7 +43,7 @@ public class CustomerDetailsEntity extends BaseEntity implements Serializable {
     private Address address;
     @Type(type = "json")
     @Column(columnDefinition = "json")
-    private JsonNode payload;
+    private ObjectNode payload;
 
     public String getCustomerNumber() {
         return customerNumber;
@@ -69,11 +69,11 @@ public class CustomerDetailsEntity extends BaseEntity implements Serializable {
         this.lastName = lastName;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -133,11 +133,11 @@ public class CustomerDetailsEntity extends BaseEntity implements Serializable {
         this.address = address;
     }
 
-    public JsonNode getPayload() {
+    public ObjectNode getPayload() {
         return payload;
     }
 
-    public void setPayload(JsonNode payload) {
+    public void setPayload(ObjectNode payload) {
         this.payload = payload;
     }
 }

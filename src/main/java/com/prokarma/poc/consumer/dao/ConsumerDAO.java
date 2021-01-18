@@ -1,19 +1,13 @@
 package com.prokarma.poc.consumer.dao;
 
 import com.prokarma.poc.consumer.entitties.CustomerDetailsEntity;
-import com.prokarma.poc.consumer.repository.ConsumerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import com.prokarma.poc.consumer.entitties.ErrorLogEntity;
 
-@Repository
-public class ConsumerDAO {
-    @Autowired
-    ConsumerRepository consumerRepository;
+public interface ConsumerDAO {
 
-    public void storeCustomerDetails(CustomerDetailsEntity customerDetailsEntity) {
-        throw new RuntimeException();
-       /* CustomerDetailsEntity entity = consumerRepository.save(customerDetailsEntity);
-        return entity;*/
-    }
+    // Stores customer details
+    Long storeCustomerDetails(CustomerDetailsEntity customerDetailsEntity);
 
+    // Stores Error log details
+    Long storeErrorLog(ErrorLogEntity errorLogEntity);
 }

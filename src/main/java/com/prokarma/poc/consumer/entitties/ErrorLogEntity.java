@@ -1,16 +1,20 @@
 package com.prokarma.poc.consumer.entitties;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "ERROR_LOG")
 public class ErrorLogEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue
@@ -20,11 +24,18 @@ public class ErrorLogEntity implements Serializable {
     private String errorType;
     @NotNull
     @Column(name = "ERROR_DESCRIPTION")
+    @Size(max = 500)
     private String errorDescription;
     @NotNull
     @Type(type = "json")
     @Column(columnDefinition = "json")
-    private JsonNode payload;
+    private ObjectNode payload;
+
+    public ErrorLogEntity(String errorType, String errorDescription, ObjectNode payload) {
+        this.errorType = errorType;
+        this.errorDescription = errorDescription;
+        this.payload = payload;
+    }
 
     public Long getId() {
         return id;
@@ -54,7 +65,7 @@ public class ErrorLogEntity implements Serializable {
         return payload;
     }
 
-    public void setPayload(JsonNode payload) {
+    public void setPayload(ObjectNode payload) {
         this.payload = payload;
     }
 

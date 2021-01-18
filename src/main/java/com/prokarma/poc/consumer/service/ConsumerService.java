@@ -1,9 +1,8 @@
 package com.prokarma.poc.consumer.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public interface ConsumerService {
 
-    void storeCustomerDetails(JsonNode jsonNode);
-    void createErrorRecord(Throwable jsonNode);
+    void storeCustomerDetails(ObjectNode objectNode);
 }
