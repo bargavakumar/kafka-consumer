@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,8 +22,8 @@ public class KafkaConsumer {
         this.consumerService = consumerService;
     }
 
-    @KafkaListener(topics = ConsumerConstant.TOPIC, groupId = ConsumerConstant.GROUP_ID, containerFactory = ConsumerConstant.CONTAINER_Factory)
-    public void consume(@Payload ObjectNode objectNode) {
+    @KafkaListener(topics = ConsumerConstant.TOPIC, groupId = ConsumerConstant.GROUP_ID)
+    public void consume(ObjectNode objectNode) {
         try {
             if (objectNode != null) {
                 logger.info("Consumed data from topic {}", ConsumerUtil.customerDetailsMasker(objectNode));
