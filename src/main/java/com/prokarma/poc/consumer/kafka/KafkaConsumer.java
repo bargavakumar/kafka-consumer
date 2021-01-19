@@ -3,6 +3,7 @@ package com.prokarma.poc.consumer.kafka;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.prokarma.poc.consumer.constants.ConsumerConstant;
 import com.prokarma.poc.consumer.service.ConsumerService;
+import com.prokarma.poc.consumer.util.ConsumerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class KafkaConsumer {
     public void consume(@Payload ObjectNode objectNode) {
         try {
             if (objectNode != null) {
-                logger.info("Consumed data from topic {}", objectNode);
+                logger.info("Consumed data from topic {}", ConsumerUtil.customerDetailsMasker(objectNode));
                 consumerService.storeCustomerDetails(objectNode);
             }
         } catch (Exception ex) {

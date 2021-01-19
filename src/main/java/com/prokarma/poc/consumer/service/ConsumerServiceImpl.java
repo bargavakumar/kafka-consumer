@@ -1,6 +1,7 @@
 package com.prokarma.poc.consumer.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.prokarma.poc.consumer.dao.ConsumerDAOImpl;
@@ -10,23 +11,29 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class ConsumerServiceImpl implements ConsumerService {
 
     private static Logger logger = LoggerFactory.getLogger(ConsumerServiceImpl.class);
 
-    private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper = new ObjectMapper();
     private ConsumerDAOImpl consumerDAOImpl;
 
     @Autowired
-    ConsumerServiceImpl(ConsumerDAOImpl consumerDAOImpl, ObjectMapper objectMapper) {
+    ConsumerServiceImpl(ConsumerDAOImpl consumerDAOImpl) {
         this.consumerDAOImpl = consumerDAOImpl;
-        this.objectMapper = objectMapper;
+    }
+
+    @PostConstruct
+    void setDefaultValues() {
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
     @Override
     public void storeCustomerDetails(ObjectNode objectNode) {
-        objectMapper.registerModule(new JavaTimeModule());
         CustomerDetailsEntity customerDetails = objectMapper.convertValue(objectNode, CustomerDetailsEntity.class);
         customerDetails.setPayload(objectNode);
         Long id = consumerDAOImpl.storeCustomerDetails(customerDetails);
