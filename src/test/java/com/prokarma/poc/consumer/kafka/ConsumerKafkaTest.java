@@ -16,12 +16,11 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConsumerKafkaTest {
+    private static Logger logger = LoggerFactory.getLogger(ConsumerKafkaTest.class);
     @InjectMocks
     KafkaConsumer kafkaConsumer;
     @Mock
     ConsumerServiceImpl consumerService;
-
-    private static Logger logger = LoggerFactory.getLogger(ConsumerKafkaTest.class);
 
     @Test
     public void testConsume() {

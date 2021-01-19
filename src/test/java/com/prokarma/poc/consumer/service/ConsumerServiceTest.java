@@ -18,13 +18,11 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConsumerServiceTest {
+    private static Logger logger = LoggerFactory.getLogger(ConsumerKafkaTest.class);
     @InjectMocks
     ConsumerServiceImpl consumerService;
-
     @Mock
     ConsumerDAOImpl consumerDAO;
-
-    private static Logger logger = LoggerFactory.getLogger(ConsumerKafkaTest.class);
 
     @Test
     public void testStoreCustomerDetails() {
