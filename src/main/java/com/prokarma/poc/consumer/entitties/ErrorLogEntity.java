@@ -27,8 +27,8 @@ public class ErrorLogEntity implements Serializable {
     @Size(max = 500)
     private String errorDescription;
     @NotNull
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
     private ObjectNode payload;
 
     public ErrorLogEntity(String errorType, String errorDescription, ObjectNode payload) {

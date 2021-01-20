@@ -41,8 +41,8 @@ public class CustomerDetailsEntity implements Serializable {
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Address address;
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
     private ObjectNode payload;
 
     public String getCustomerNumber() {
