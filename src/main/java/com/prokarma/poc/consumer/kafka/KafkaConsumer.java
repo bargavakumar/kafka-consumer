@@ -1,7 +1,6 @@
 package com.prokarma.poc.consumer.kafka;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.prokarma.poc.consumer.constants.ConsumerConstant;
 import com.prokarma.poc.consumer.service.ConsumerService;
 import com.prokarma.poc.consumer.util.ConsumerUtil;
 import org.slf4j.Logger;
@@ -10,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CountDownLatch;
+
 @Component
 public class KafkaConsumer {
 
@@ -17,12 +18,19 @@ public class KafkaConsumer {
 
     private ConsumerService consumerService;
 
+    // For integration test purpose only
+    private CountDownLatch latch = new CountDownLatch(1);
+
     @Autowired
     KafkaConsumer(ConsumerService consumerService) {
         this.consumerService = consumerService;
     }
 
-    @KafkaListener(topics = ConsumerConstant.TOPIC, groupId = ConsumerConstant.GROUP_ID)
+    public CountDownLatch getLatch() {
+        return latch;
+    }
+
+    @KafkaListener(topics = "${consumer.kafka-topic}")
     public void consume(ObjectNode objectNode) {
         try {
             if (objectNode != null) {
