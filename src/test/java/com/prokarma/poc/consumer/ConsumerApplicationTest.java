@@ -1,7 +1,6 @@
 package com.prokarma.poc.consumer;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.prokarma.poc.consumer.kafka.KafkaConsumer;
 import com.prokarma.poc.consumer.repository.CustomerDetailsRepository;
@@ -41,24 +40,13 @@ class ConsumerApplicationTest {
 
     @Test
     void testConsumerToStoreCustomerDetailsEntity() {
-        kafkaTemplate.send(topic, getObjectNode());
+        String input = "{\"customerNumber\":\"C000000002\",\"firstName\":\"bargavakumar\",\"lastName\":\"akavarammm\",\"birthDate\":\"18-05-1991\",\"country\":\"INDIA\",\"countryCode\":\"IN\",\"mobileNumber\":\"9989922802\",\"email\":\"adotbhargav@gmail.com\",\"customerStatus\":\"O\",\"address\":{\"addressLine1\":\"Plot no 28\",\"addressLine2\":\"Lalitha nagar\",\"street\":\"Sai nagar\",\"postalCode\":\"50068\"}}";
+        kafkaTemplate.send(topic, Utility.constructObjectNode(input));
         try {
             kafkaConsumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
         }
-    }
-
-    private ObjectNode getObjectNode() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectNode objectNode = objectMapper.createObjectNode();
-        try {
-            objectNode = (ObjectNode) objectMapper.readTree("{\"customerNumber\":\"C000000002\",\"firstName\":\"bargavakumar\",\"lastName\":\"akavarammm\",\"birthDate\":\"18-05-1991\",\"country\":\"INDIA\",\"countryCode\":\"IN\",\"mobileNumber\":\"9989922802\",\"email\":\"adotbhargav@gmail.com\",\"customerStatus\":\"O\",\"address\":{\"addressLine1\":\"Plot no 28\",\"addressLine2\":\"Lalitha nagar\",\"street\":\"Sai nagar\",\"postalCode\":\"50068\"}}");
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-        }
-        return objectNode;
-
     }
 
 }
