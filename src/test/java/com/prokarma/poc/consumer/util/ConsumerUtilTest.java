@@ -4,11 +4,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.prokarma.poc.consumer.Utility;
 import com.prokarma.poc.consumer.constants.ConsumerConstant;
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class ConsumerUtilTest {
 
     @Test

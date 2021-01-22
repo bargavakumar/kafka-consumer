@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.CountDownLatch;
-
 @Component
 public class KafkaConsumer {
 
@@ -18,17 +16,11 @@ public class KafkaConsumer {
 
     private ConsumerService consumerService;
 
-    // For integration test purpose only
-    private CountDownLatch latch = new CountDownLatch(1);
-
     @Autowired
     KafkaConsumer(ConsumerService consumerService) {
         this.consumerService = consumerService;
     }
 
-    public CountDownLatch getLatch() {
-        return latch;
-    }
 
     @KafkaListener(topics = "${consumer.kafka-topic}")
     public void consume(ObjectNode objectNode) {

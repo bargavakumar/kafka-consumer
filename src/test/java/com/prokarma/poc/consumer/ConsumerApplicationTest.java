@@ -15,8 +15,6 @@ import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.concurrent.TimeUnit;
-
 @SpringBootTest
 @TestPropertySource(
         locations = "classpath:application.properties")
@@ -43,7 +41,7 @@ class ConsumerApplicationTest {
         String input = "{\"customerNumber\":\"C000000002\",\"firstName\":\"bargavakumar\",\"lastName\":\"akavarammm\",\"birthDate\":\"18-05-1991\",\"country\":\"INDIA\",\"countryCode\":\"IN\",\"mobileNumber\":\"9989922802\",\"email\":\"adotbhargav@gmail.com\",\"customerStatus\":\"O\",\"address\":{\"addressLine1\":\"Plot no 28\",\"addressLine2\":\"Lalitha nagar\",\"street\":\"Sai nagar\",\"postalCode\":\"50068\"}}";
         kafkaTemplate.send(topic, Utility.constructObjectNode(input));
         try {
-            kafkaConsumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
         }
@@ -54,7 +52,7 @@ class ConsumerApplicationTest {
         String input = "{\"customerNumber\":\"C000000002\",\"firstName\":\"bargavakumar\",\"lastName\":\"akavarammm\",\"birthDate\":\"18-05-1991\",\"country\":\"INDIA\",\"countryCode\":\"IN\",\"mobileNumber\":\"9989922802\",\"email\":\"adotbhargav@gmail.com\",\"customerStatus\":\"OPEN\",\"address\":{\"addressLine1\":\"Plot no 28\",\"addressLine2\":\"Lalitha nagar\",\"street\":\"Sai nagar\",\"postalCode\":\"50068\"}}";
         kafkaTemplate.send(topic, Utility.constructObjectNode(input));
         try {
-            kafkaConsumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
         }
