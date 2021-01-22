@@ -26,11 +26,11 @@ public class KafkaConsumer {
     public void consume(ObjectNode objectNode) {
         try {
             if (objectNode != null) {
-                logger.info("Consumed data from topic {}", ConsumerUtil.customerDetailsMasker(objectNode));
+                logger.info("applicationName=Consumer|Consumed data from topic {}", ConsumerUtil.customerDetailsMasker(objectNode));
                 consumerService.storeCustomerDetails(objectNode);
             }
         } catch (Exception ex) {
-            logger.error("Exception thrown while saving Customer details {} : ", ex.getMessage());
+            logger.error("applicationName=Consumer|Exception thrown while saving Customer details {} : ", ex.getMessage());
         }
     }
 }

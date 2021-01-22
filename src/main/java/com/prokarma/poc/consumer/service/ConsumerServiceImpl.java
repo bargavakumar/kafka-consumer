@@ -37,6 +37,6 @@ public class ConsumerServiceImpl implements ConsumerService {
         CustomerDetailsEntity customerDetails = objectMapper.convertValue(objectNode, CustomerDetailsEntity.class);
         customerDetails.setPayload(objectNode);
         Long id = consumerDAOImpl.storeCustomerDetails(customerDetails);
-        logger.info("Customer details record inserted with {} : ", id);
+        logger.info("applicationName=Consumer|message=Customer details record inserted with {}:", id);
     }
 }

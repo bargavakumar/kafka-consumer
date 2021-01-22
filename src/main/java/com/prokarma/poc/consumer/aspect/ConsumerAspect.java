@@ -29,9 +29,9 @@ public class ConsumerAspect {
         try {
             ErrorLogEntity errorLogEntity = new ErrorLogEntity(ex.getClass().getSimpleName(), ex.getMessage(), (ObjectNode) joinPoint.getArgs()[0]);
             Long id = consumerDAOImpl.storeErrorLog(errorLogEntity);
-            logger.info("Error record stored with id {} : ", id);
+            logger.info("applicationName=Consumer|message=Error record stored with id {}:", id);
         } catch (Exception exception) {
-            logger.error("Exception thrown while storing error records {} : ", exception.getMessage());
+            logger.error("applicationName=Consumer|Exception thrown while storing error records {} : ", exception.getMessage());
         }
 
     }
